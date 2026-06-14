@@ -1,5 +1,5 @@
 
-# sebuilder
+# Sebuilder
 
 Build Scratch Everywhere! from .sb3 files
 
@@ -21,6 +21,6 @@ Go to the project directory
 Run the project
 
 ```bash
-  cargo run -- _--help
+  cargo run -- --help
 ```
 
