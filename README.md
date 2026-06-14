@@ -24,3 +24,8 @@ Run the project
   cargo run -- --help
 ```
 
+## Examples
+
+```bash
+  cargo run -- --name myproject -d "This is a description" --author you  -s Project.sb3
+```
