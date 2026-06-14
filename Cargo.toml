@@ -1,0 +1,10 @@
+[package]
+name = "sebuilder"
+version = "0.1.0"
+edition = "2024"
+description = "Build Scratch Everywhere! from .sb3 files"
+authors = ["TurboToad12"]
+
+[dependencies]
+git2 = { version = "0.21.0", features = ["https"] }
+seahorse = "2.2.0"
