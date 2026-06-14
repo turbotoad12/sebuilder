@@ -11,3 +11,4 @@ seahorse = "2.2.0"
 reqwest = { version = "0.13.4", features = ["blocking", "json"]}
 serde = { version = "1.0.228", features = ["derive"] }
 semver = "1.0.28"
+regex = "1.7.3"
