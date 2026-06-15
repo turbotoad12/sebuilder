@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io;
 use std::path::Path;
 use zip::ZipArchive;
 
