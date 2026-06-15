@@ -5,6 +5,7 @@ edition = "2024"
 description = "Build Scratch Everywhere! from .sb3 files"
 authors = ["TurboToad12"]
 repository = "https://github.com/turbotoad12/sebuilder"
+license-file = "LICENSE"
 
 [dependencies]
 git2 = { version = "0.21.0", features = ["https"] }

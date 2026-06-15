@@ -3,29 +3,26 @@
 
 Build Scratch Everywhere! from .sb3 files
 
+## Installation
 
-## Run Locally
+### Requirements
 
-Clone the project
+- Rust toolchain ([Download](https://rust-lang.org/tools/install/))
 
-```bash
-  git clone https://github.com/turbotoad12/sebuilder.git
-```
-
-Go to the project directory
+### Install
 
 ```bash
-  cd sebuilder
+cargo install sebuilder
 ```
 
-Run the project
 
-```bash
-  cargo run -- --help
-```
+
+
+
+
 
 ## Examples
 
 ```bash
-  cargo run -- --name myproject -d "This is a description" --author you  -s Project.sb3
+sebuilder --name myproject -d "This is a description" --author you  -s Project.sb3
 ```
