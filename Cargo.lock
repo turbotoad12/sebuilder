@@ -1349,7 +1349,7 @@ checksum = "d25679a62f678e7485f21abdea76f91a15322a0fe51efea791fd9d124f1c473c"
 
 [[package]]
 name = "sebuilder"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "git2",
  "regex",
