@@ -8,6 +8,7 @@ Build Scratch Everywhere! from .sb3 files
 ### Requirements
 
 - Rust toolchain ([Download](https://rust-lang.org/tools/install/))
+- Docker installation
 
 ### Install
 
