@@ -44,7 +44,7 @@ use serde::Deserialize;
 struct Tag {
     name: String,
 }
-
+#[allow(clippy::collapsible_if)]
 fn normalize(tag: &str) -> Option<Version> {
     // Already valid semver?
     if let Ok(v) = Version::parse(tag) {
