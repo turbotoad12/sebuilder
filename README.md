@@ -29,4 +29,4 @@ sebuilder --name myproject -d "This is a description" --author you -s Project.sb
 ```
 
 # Supported platforms
-3ds, gamecube, libretro, linux, macos, nds, ps4, psp, switch, vita, wasm, webos, wii, wiiu, windows
+3ds, gamecube, libretro, linux, macOS, nds, ps4, psp, switch, vita, wasm, webos, wii, wiiu, windows
