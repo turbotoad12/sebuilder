@@ -40,24 +40,12 @@ impl Default for GameConfig {
 pub struct AssetsConfig {
     #[serde(default)]
     pub sb3: String,
-
-    #[serde(default)]
-    pub icon: String,
-
-    #[serde(default)]
-    pub banner: String,
-
-    #[serde(default)]
-    pub audio: String,
 }
 
 impl Default for AssetsConfig {
     fn default() -> Self {
         Self {
-            sb3: "project.sb3".into(),
-            icon: "icon.png".into(),
-            banner: "banner.png".into(),
-            audio: "audio.wav".into(),
+            sb3: "project.sb3".into()
         }
     }
 }
@@ -116,16 +104,6 @@ impl ProjectConfig {
         if config.assets.sb3.is_empty() {
             config.assets.sb3 = defaults.assets.sb3;
         }
-        if config.assets.icon.is_empty() {
-            config.assets.icon = defaults.assets.icon;
-        }
-        if config.assets.banner.is_empty() {
-            config.assets.banner = defaults.assets.banner;
-        }
-        if config.assets.audio.is_empty() {
-            config.assets.audio = defaults.assets.audio;
-        }
-
         Ok(config)
     }
 

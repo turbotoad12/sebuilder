@@ -11,7 +11,7 @@ use cmake::update_cmake_set;
 use git::clone_tag;
 use seahorse::{App, Context, Flag, FlagType, Command};
 use std::env;
-use utils::run_cross_platform;
+use utils::{run_cross_platform, copy_dir_all};
 use zip::unzip_file;
 use crate::new::create_new_project;
 
@@ -49,7 +49,7 @@ fn main() {
     app.run(args);
 }
 
-fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: &str, icon: &str, banner: &str, audio: &str) {
+fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: &str) {
 
     // Check if ./se exists, if so, delete it
     if std::path::Path::new("./se").exists() {
@@ -73,10 +73,16 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
     // unzip the sb3 file into the project directory
     unzip_file(&sb3_file, "./se/romfs/project").expect("Failed to unzip SB3 file");
 
+    // Copy replace assets in ./se/gfx with assets/*
+    std::fs::remove_dir_all("./se/gfx").expect("Failed to remove gfx directory");
+    std::fs::create_dir_all("./se/gfx/").expect("Failed to create project directory");
+    copy_dir_all("./assets", "./se/gfx").expect("Failed to copy assets.");
+
+
     // Build the project
     run_cross_platform(
         format!(
-            "docker build -f ./se/docker/Dockerfile.{} --target exporter -o ./se ./se",
+            "docker build -f ./se/docker/Dockerfile.{} --target exporter -o ./se .",
             platform
         )
         .as_str(),
@@ -100,12 +106,12 @@ fn new_project(c: &Context) {
 fn build_project(c: &Context) {
     let config = ProjectConfig::load("sebuilder.toml").expect("Could not load project _config");
 
-    let platform = c.string_flag("platform").unwrap();
+    let platform = c.string_flag("platform").unwrap_or_default();
     if platform.is_empty() {
         println!("Platform flag not set, defaulting to 3ds");
-        build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, "3ds", &*config.assets.icon, &*config.assets.banner, &*config.assets.audio);
+        build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, "3ds");
         return;
     }
 
-    build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, &*platform, &*config.assets.icon, &*config.assets.banner, &*config.assets.audio);
+    build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, &*platform);
 }
