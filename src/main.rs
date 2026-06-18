@@ -55,6 +55,8 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
     if std::path::Path::new("./se").exists() {
         std::fs::remove_dir_all("./se").expect("Failed to remove existing SE directory");
     }
+
+    println!("Downloading SE...");
     clone_tag(
         "https://github.com/ScratchEverywhere/ScratchEverywhere.git",
         None,
@@ -62,6 +64,7 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
     )
     .expect("Failed to clone SE repo");
 
+    println!("Copying assets...");
     update_cmake_set("./se/CMakeLists.txt", "SE_APP_NAME", &name)
         .expect("Failed to update CMake set");
     update_cmake_set("./se/CMakeLists.txt", "SE_APP_DESCRIPTION", &description)
@@ -79,6 +82,7 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
     copy_dir_all("./assets", "./se/gfx").expect("Failed to copy assets.");
 
 
+    println!("Building with Docker...");
     // Build the project
     run_cross_platform(
         format!(
@@ -88,6 +92,7 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
         .as_str(),
     )
     .expect("Failed to run cross-platform command");
+    println!("Done!");
 }
 
 fn new_project(c: &Context) {
