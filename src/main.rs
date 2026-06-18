@@ -109,9 +109,9 @@ fn build_project(c: &Context) {
     let platform = c.string_flag("platform").unwrap_or_default();
     if platform.is_empty() {
         println!("Platform flag not set, defaulting to 3ds");
-        build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, "3ds");
+        build(&config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, "3ds");
         return;
     }
 
-    build(&*config.game.name, &*config.game.description, &*config.game.author, &*config.assets.sb3, &*platform);
+    build(&config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, &platform);
 }
