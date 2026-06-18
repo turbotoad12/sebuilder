@@ -11,7 +11,7 @@ pub fn clone_tag(
         Some(t) if !t.trim().is_empty() => t.to_string(),
         _ => {
             println!("No tag provided — fetching latest tag...");
-            crate::git::get_latest_se_tag()? // call your sync function
+            get_latest_se_tag()? // call your sync function
         }
     };
 
@@ -33,7 +33,6 @@ pub fn clone_tag(
 
     Ok(())
 }
-
 
 use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT};
@@ -76,7 +75,10 @@ pub fn get_latest_se_tag() -> Result<String, Box<dyn std::error::Error>> {
     let url = "https://api.github.com/repos/ScratchEverywhere/ScratchEverywhere/tags";
 
     let mut headers = HeaderMap::new();
-    headers.insert(USER_AGENT, HeaderValue::from_static("visual-scratch-updater"));
+    headers.insert(
+        USER_AGENT,
+        HeaderValue::from_static("visual-scratch-updater"),
+    );
 
     let client = Client::new();
     let tags: Vec<Tag> = client.get(url).headers(headers).send()?.json()?;
@@ -96,7 +98,6 @@ pub fn get_latest_se_tag() -> Result<String, Box<dyn std::error::Error>> {
     // Return the original tag string, not the normalized one
     Ok(versions[0].0.clone())
 }
-
 
 // -------- TESTS --------
 #[cfg(test)]
@@ -123,15 +124,9 @@ mod tests {
 
     #[test]
     fn test_sorting_latest() {
-        let tags = vec![
-            "0.39.1",
-            "0.40",
-            "1.0-rc1",
-            "1.0-rc3",
-            "1.0-rc2",
-        ];
+        let tags = vec!["0.39.1", "0.40", "1.0-rc1", "1.0-rc3", "1.0-rc2"];
 
-        let mut versions: Vec<(String, semver::Version)> = tags
+        let mut versions: Vec<(String, Version)> = tags
             .iter()
             .filter_map(|t| normalize(t).map(|v| (t.to_string(), v)))
             .collect();
@@ -141,5 +136,3 @@ mod tests {
         assert_eq!(versions[0].0, "1.0-rc3");
     }
 }
-
-
