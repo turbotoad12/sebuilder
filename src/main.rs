@@ -86,7 +86,7 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
     // Build the project
     run_cross_platform(
         format!(
-            "docker build -f ./se/docker/Dockerfile.{} --target exporter -o ./se .",
+            "docker build -f ./se/docker/Dockerfile.{} --target exporter -o . ./se",
             platform
         )
         .as_str(),

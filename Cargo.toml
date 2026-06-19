@@ -1,6 +1,6 @@
 [package]
 name = "sebuilder"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "Build Scratch Everywhere! from .sb3 files"
 authors = ["TurboToad12"]
