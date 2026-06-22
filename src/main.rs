@@ -10,7 +10,7 @@ use project::ProjectConfig;
 use cmake::update_cmake_set;
 use git::clone_tag;
 use seahorse::{App, Context, Flag, FlagType, Command};
-use std::env;
+use std::{env, fs};
 use utils::{run_cross_platform, copy_dir_all};
 use zip::unzip_file;
 use crate::new::create_new_project;
@@ -35,6 +35,11 @@ fn main() {
         Flag::new("platform", FlagType::String)
             .description("Produced platform (3ds, wiiu, etc.)")
             .alias("p"),
+    )
+    .flag(
+        Flag::new("debug", FlagType::Bool)
+            .description("Enable debug logging")
+            .alias("d"),
     );
 
 
@@ -49,7 +54,7 @@ fn main() {
     app.run(args);
 }
 
-fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: &str) {
+fn build(c: &Context, name: &str, description: &str, author: &str, sb3_file: &str, platform: &str) {
 
     // Check if ./se exists, if so, delete it
     if std::path::Path::new("./se").exists() {
@@ -92,6 +97,13 @@ fn build(name: &str, description: &str, author: &str, sb3_file: &str, platform: 
         .as_str(),
     )
     .expect("Failed to run cross-platform command");
+
+    if c.bool_flag("debug") == false {
+        fs::remove_dir_all("./se").expect("Failed to remove se directory");
+    } else {
+        // dont remove it :D
+    }
+
     println!("Done!");
 }
 
@@ -114,9 +126,9 @@ fn build_project(c: &Context) {
     let platform = c.string_flag("platform").unwrap_or_default();
     if platform.is_empty() {
         println!("Platform flag not set, defaulting to 3ds");
-        build(&config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, "3ds");
+        build(c, &config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, "3ds");
         return;
     }
 
-    build(&config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, &platform);
+    build(c, &config.game.name, &config.game.description, &config.game.author, &config.assets.sb3, &platform);
 }
