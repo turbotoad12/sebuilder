@@ -76,7 +76,7 @@ fn build(c: &Context, name: &str, description: &str, author: &str, sb3_file: &st
         .expect("Failed to update CMake set");
     update_cmake_set("./se/CMakeLists.txt", "SE_APP_AUTHOR", &author)
         .expect("Failed to update CMake set");
-
+    
     std::fs::create_dir_all("./se/romfs/project").expect("Failed to create project directory");
     // unzip the sb3 file into the project directory
     unzip_file(&sb3_file, "./se/romfs/project").expect("Failed to unzip SB3 file");
