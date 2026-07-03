@@ -36,7 +36,7 @@ pub fn create_new_project(name: &str) -> Result<(), Box<dyn std::error::Error>> 
     let mut rsf: Rsf = load_rsf_safe(&rsf_file).expect("Failed to load RSF file");
 
     rsf.basic_info.title = name.to_string();
-    rsf.basic_info.set_product_code(&*sanitize_product_code(name)).expect("Failed to set product code.");
+    rsf.basic_info.set_product_code(&sanitize_product_code(name)).expect("Failed to set product code.");
     rsf.title_info.unique_id = generate_unique_id();
 
     save_rsf(rsf_path, &rsf).expect("Failed to save RSF file.");
