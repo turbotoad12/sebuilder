@@ -1,10 +1,9 @@
+use ctr_rsf::rng::generate_unique_id;
+use ctr_rsf::{Rsf, load_rsf_safe, sanitize_product_code, save_rsf};
 use std::fs;
 use std::io::Cursor;
 use std::path::Path;
-use ctr_rsf::{load_rsf_safe, sanitize_product_code, save_rsf, Rsf};
-use ctr_rsf::rng::generate_unique_id;
 use zip::ZipArchive;
-
 
 pub fn create_new_project(name: &str) -> Result<(), Box<dyn std::error::Error>> {
     let root = Path::new(name);
@@ -13,13 +12,12 @@ pub fn create_new_project(name: &str) -> Result<(), Box<dyn std::error::Error>> 
     fs::create_dir_all(root)?;
 
     let response = reqwest::blocking::get(
-        "https://github.com/turbotoad12/sebuilder/raw/refs/heads/main/templates/project.zip"
+        "https://github.com/turbotoad12/sebuilder/raw/refs/heads/main/templates/project.zip",
     )?;
 
     if !response.status().is_success() {
         return Err(format!("Failed to download file: HTTP {}", response.status()).into());
     }
-
 
     let bytes = response.bytes()?;
     let reader = Cursor::new(bytes.as_ref());
@@ -41,7 +39,9 @@ pub fn create_new_project(name: &str) -> Result<(), Box<dyn std::error::Error>> 
     })?;
 
     rsf.basic_info.title = name.to_string();
-    rsf.basic_info.set_product_code(&sanitize_product_code(name)).expect("Failed to set product code.");
+    rsf.basic_info
+        .set_product_code(&sanitize_product_code(name))
+        .expect("Failed to set product code.");
     rsf.title_info.unique_id = generate_unique_id();
 
     save_rsf(rsf_path, &rsf).map_err(|e| {
@@ -53,8 +53,5 @@ pub fn create_new_project(name: &str) -> Result<(), Box<dyn std::error::Error>> 
 
     println!("Created new project: {}", name);
 
-
     Ok(())
 }
-
-

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
-use std::fs;
 use std::error::Error;
+use std::fs;
 
 //
 // ─────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ pub struct AssetsConfig {
 impl Default for AssetsConfig {
     fn default() -> Self {
         Self {
-            sb3: "project.sb3".into()
+            sb3: "project.sb3".into(),
         }
     }
 }
