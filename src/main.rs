@@ -99,6 +99,10 @@ fn build(c: &Context, name: &str, description: &str, author: &str, sb3_file: &st
         // dont remove it :D
     }
 
+    // Rename output
+    fs::rename("./scratch-3ds.cia", format!("./{}.cia", name).as_str()).expect("Failed to rename scratch-3ds.cia");
+    fs::rename("./scratch-3ds.3dsx", format!("./{}.3dsx", name).as_str()).expect("Failed to rename scratch-3ds.3dsx");
+
     println!("Done!");
 }
 
