@@ -15,6 +15,6 @@ reqwest = { version = "0.13.4", features = ["blocking", "json"]}
 serde = { version = "1.0.228", features = ["derive"] }
 semver = "1.0.28"
 regex = "1.7.3"
-zip = "8.6.0"
+zip = "9.0.5"
 toml = "1.1.2"
 ctr-rsf = "0.1.2"
